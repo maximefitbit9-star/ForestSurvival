@@ -1,0 +1,14 @@
+{
+  "classes": {
+    "camper": {"name": "Camper", "price": 10, "description": "The ideal class for new players, focused on baseline survival and ease of play.", "starting_items": {"log": 4, "berries": 5}, "passives": {"health_bonus": 20, "hunger_rate": 0.85}, "note": "Verified price: 10 diamonds. Perks adapted for single-player."},
+    "scavenger": {"name": "Scavenger", "price": 25, "description": "Finds more when searching buildings and chests.", "starting_items": {"bandage": 1}, "passives": {"loot_bonus": 0.25}, "note": "Verified price: 25 diamonds."},
+    "medic": {"name": "Medic", "price": 40, "description": "Starts with medical supplies and heals faster.", "starting_items": {"bandage": 2, "medkit": 1}, "passives": {"health_regen": 0.5}, "note": "Verified price: 40 diamonds."},
+    "fisherman": {"name": "Fisherman", "price": 50, "description": "Starts holding a rod's worth of catch: fish to eat from day one.", "starting_items": {"fish": 4}, "passives": {"fish_yield": 1}, "note": "Verified price: 50 diamonds. Fishing rod adapted to a forage bonus near water."},
+    "lumberjack": {"name": "Lumberjack", "price": 70, "description": "Receives extra wood when felling trees.", "starting_items": {"good_axe": 1}, "passives": {"wood_bonus": 1}, "note": "Verified price: 70 diamonds. Wiki confirms Lumberjack gets extra wood."},
+    "berserker": {"name": "Berserker", "price": 100, "description": "Hits harder and runs faster, but hungers quicker.", "starting_items": {"old_axe": 1}, "passives": {"damage_bonus": 0.5, "speed_bonus": 1.5, "hunger_rate": 1.2}, "note": "Verified price: 100 diamonds."},
+    "chef": {"name": "Chef", "price": 150, "description": "Cooks unique seasoned recipes that grant large bonuses.", "starting_items": {"hearty_stew": 2}, "passives": {"food_bonus": 0.5}, "note": "Verified price: 150 diamonds. Chef's Station blueprint adapted to bonus stew output."},
+    "blacksmith": {"name": "Blacksmith", "price": 200, "description": "A crafting specialist: grinds extra scrap and crafts at a discount.", "starting_items": {"scrap": 10, "bolt": 5}, "passives": {"grind_bonus": 0.5, "craft_discount": 0.15}, "note": "Verified price: 200 diamonds. Wiki confirms grinder scrap bonus and craft discounts."}
+  },
+  "default_class": "camper",
+  "note": "Prices verified against the reference wiki and GamesRadar class guide. Perk implementations are documented single-player adaptations; class level progression (I-III) from the original is not implemented."
+}
