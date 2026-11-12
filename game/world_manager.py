@@ -132,12 +132,18 @@ class WorldRenderer:
         terrain_root.set_scale(world.size / TERRAIN_SIZE, world.size / TERRAIN_SIZE, self.z_scale)
         terrain_root.set_pos(-world.size / 2, -world.size / 2, 0)
         terrain_root.reparentTo(self.root)
-        grass = self.base.loader.loadTexture(self.textures["grass"])
-        grass.set_wrap_u(Texture.WMRepeat)
-        grass.set_wrap_v(Texture.WMRepeat)
-        terrain_root.set_texture(grass)
-        for stage in terrain_root.find_all_texture_stages():
-            terrain_root.set_tex_scale(stage, 48)
+        try:
+            grass = self.base.loader.loadTexture(Filename.from_os_specific(self.textures["grass"]))
+        except Exception:
+            grass = None
+        if grass is not None:
+            grass.set_wrap_u(Texture.WMRepeat)
+            grass.set_wrap_v(Texture.WMRepeat)
+            terrain_root.set_texture(grass)
+            for stage in terrain_root.find_all_texture_stages():
+                terrain_root.set_tex_scale(stage, 48)
+        else:
+            terrain_root.set_color(0.32, 0.5, 0.24, 1)
         self.terrain.generate()
         if self.base.camera is not None:
             self.terrain.set_focal_point(self.base.camera.get_pos(self.base.render).xy)

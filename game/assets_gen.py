@@ -8,9 +8,16 @@ from panda3d.core import PNMImage, Filename
 TEX_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "textures", "generated")
 
 
+def _valid_png(path):
+    if not os.path.exists(path):
+        return False
+    img = PNMImage()
+    return img.read(Filename.from_os_specific(path))
+
+
 def _noise_tex(name, size, base, variation, seed=1, blotches=12):
     path = os.path.join(TEX_DIR, name)
-    if os.path.exists(path):
+    if _valid_png(path):
         return path
     rng = random.Random(seed)
     img = PNMImage(size, size)
@@ -35,7 +42,8 @@ def _noise_tex(name, size, base, variation, seed=1, blotches=12):
                     img.set_xel(x, y, max(0.0, c[0] + shade * f),
                                 max(0.0, c[1] + shade * f),
                                 max(0.0, c[2] + shade * f))
-    img.write(Filename.from_os_specific(path))
+    if not img.write(Filename.from_os_specific(path)):
+        raise IOError("Could not write generated texture: %s" % path)
     return path
 
 
