@@ -137,6 +137,50 @@ integration scenario.
   sources, plus identified uncertain information.
 - `docs/devlog.md` — development log and stage-by-stage status.
 
+## Browser edition (HTML + Three.js) - with mobile touch controls
+
+A complete remake of the game runs in the `web/` folder, built with Three.js.
+It shares the same verified config data and gameplay, works fully offline, and
+supports desktop (keyboard + mouse) and mobile (virtual joystick + touch
+buttons).
+
+### Run it
+
+- **Desktop**: open `web/index.html` directly in a browser (double-click), or
+  serve the folder for the cleanest experience:
+  ```
+  cd web
+  python -m http.server 8000
+  ```
+  then open http://localhost:8000
+- **Mobile**: serve the folder on your PC as above, find your PC's local IP
+  (e.g. 192.168.1.20), and open `http://192.168.1.20:8000` on your phone on the
+  same Wi-Fi. Touch controls appear automatically.
+
+### Differences from the Python edition
+
+- Saves use the browser's localStorage (three slots plus a persistent profile).
+- Audio is synthesised live with the Web Audio API - no audio files.
+- Mobile devices automatically use the Low preset and a reduced particle count.
+- Everything else - day/night timing, campfire levels and fuel, all five
+  crafting tiers with verified costs, tree chopping per tool, the four
+  children, threats, weather, classes, diamonds - is the same, driven by the
+  same JSON configs.
+
+### Web tests
+
+```
+node tests/test_web_logic.js         # 18 logic tests
+node tests/test_web_integration.js   # 7 HTML/JS wiring tests
+node tests/test_web_smoke.js         # 13 end-to-end tests (menu -> game -> chop -> rescue -> victory)
+```
+
+The smoke test runs the real app code headlessly and caught two genuine bugs
+during development (a wrong campfire method name and an inverted movement
+vector), both fixed before delivery.
+
+Requires Node.js only for the tests - the game itself needs nothing but a browser.
+
 ## Licence and credits
 
 Original code and assets (procedurally generated at runtime). Inspired by the

@@ -63,3 +63,22 @@
 ## Backup policy
 - Before any major change, copy the working tree to a sibling folder
   `ForestSurvival_backup_YYYYMMDD` (or commit a git tag).
+
+## Stage 10 - Browser edition (complete)
+
+- Full HTML/Three.js remake in `web/`, reusing the verified JSON configs
+  (bundled into `js/config.js` by `tools/gen_web_config.py`).
+- Same feature set as the Python edition: seeded world with four biomes,
+  verified day/night timing, six-level campfire, five-tier crafting bench with
+  verified costs, grinder, farming, building placement, four children,
+  Deer/Owl/Ram night AI, weather, eight classes, persistent diamonds,
+  localStorage saves, victory/defeat screens.
+- Mobile support: virtual joystick, drag-to-look, touch buttons for every
+  action, Low preset auto-selected on phones, reduced particle counts.
+- Fully offline: Three.js r128 vendored locally (MIT licence recorded), audio
+  synthesised via Web Audio, no network requests (enforced by test).
+- Testing: 18 logic tests (Node port of the Python suite), 7 integration tests
+  (HTML/JS wiring, offline enforcement, config parity), 13 end-to-end smoke
+  tests running the real app code against DOM/THREE stubs. The smoke test
+  caught two real bugs (Campfire.fraction naming, inverted movement vector),
+  both fixed. Total: 38 web tests + 19 Python tests, all passing.
