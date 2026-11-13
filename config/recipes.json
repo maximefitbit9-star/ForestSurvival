@@ -1,0 +1,90 @@
+{
+  "bench_levels": {
+    "1": {
+      "upgrade_cost": {},
+      "recipes": {
+        "map": {"cost": {"wood": 3}, "type": "item", "note": "Verified cost: 3 Wood."},
+        "old_bed": {"cost": {"wood": 20}, "type": "structure", "note": "Verified: 20 Wood. Skips 1 day when used."},
+        "bunny_trap": {"cost": {"wood": 5}, "type": "structure", "note": "Verified: 5 Wood."},
+        "bench_upgrade_2": {"cost": {"wood": 5, "scrap": 1}, "type": "bench_upgrade", "note": "Verified: 5 Wood, 1 Scrap."}
+      }
+    },
+    "2": {
+      "upgrade_cost": {"wood": 5, "scrap": 1},
+      "recipes": {
+        "sun_dial": {"cost": {"scrap": 5}, "type": "structure", "note": "Verified: 5 Scrap."},
+        "regular_bed": {"cost": {"scrap": 5}, "type": "structure", "note": "Verified: 5 Scrap."},
+        "compass": {"cost": {"scrap": 3}, "type": "item", "note": "Verified: 3 Scrap."},
+        "freezer": {"cost": {"scrap": 4}, "type": "structure", "note": "Verified: 4 Scrap."},
+        "farm_plot": {"cost": {"wood": 10}, "type": "structure", "note": "Verified: 10 Wood."},
+        "wood_rain_storage": {"cost": {"scrap": 5}, "type": "structure", "note": "Verified: 5 Scrap."},
+        "shelf": {"cost": {"scrap": 2}, "type": "structure", "note": "Verified: 2 Scrap."},
+        "log_wall": {"cost": {"wood": 12}, "type": "structure", "note": "Verified: 12 Wood."},
+        "bear_trap": {"cost": {"scrap": 3}, "type": "structure", "note": "Verified: 3 Scrap."},
+        "bench_upgrade_3": {"cost": {"wood": 15, "scrap": 15}, "type": "bench_upgrade", "note": "Verified: 15 Wood, 15 Scrap."}
+      }
+    },
+    "3": {
+      "upgrade_cost": {"wood": 15, "scrap": 15},
+      "recipes": {
+        "crock_pot": {"cost": {"wood": 15, "scrap": 10}, "type": "structure", "note": "Verified: 15 Wood, 10 Scrap."},
+        "radar": {"cost": {"wood": 15, "scrap": 10}, "type": "structure", "note": "Verified: 15 Wood, 10 Scrap."},
+        "boost_pad": {"cost": {"wood": 15, "scrap": 10}, "type": "structure", "note": "Verified: 15 Wood, 10 Scrap."},
+        "biofuel_processor": {"cost": {"wood": 12, "scrap": 12}, "type": "structure", "note": "Verified: 12 Wood, 12 Scrap."},
+        "torch": {"cost": {"wood": 6, "scrap": 6}, "type": "structure", "note": "Verified: 6 Wood, 6 Scrap."},
+        "good_bed": {"cost": {"wood": 10, "scrap": 10}, "type": "structure", "note": "Verified: 10 Wood, 10 Scrap."},
+        "lightning_rod": {"cost": {"scrap": 8}, "type": "structure", "note": "Verified: 8 Scrap."},
+        "bench_upgrade_4": {"cost": {"wood": 30, "scrap": 20, "cultist_gem": 2}, "type": "bench_upgrade", "note": "Verified: 30 Wood, 20 Scrap, 2 Cultist Gems."}
+      }
+    },
+    "4": {
+      "upgrade_cost": {"wood": 30, "scrap": 20, "cultist_gem": 2},
+      "recipes": {
+        "ammo_crate": {"cost": {"wood": 20, "scrap": 30, "cultist_gem": 1}, "type": "structure", "note": "Verified: 20 Wood, 30 Scrap, 1 Cultist Gem."},
+        "oil_drill": {"cost": {"wood": 25, "scrap": 35, "cultist_gem": 1}, "type": "structure", "note": "Verified: 25 Wood, 35 Scrap, 1 Cultist Gem."},
+        "giant_bed": {"cost": {"wood": 20, "scrap": 30, "cultist_gem": 1}, "type": "structure", "note": "Verified: 20 Wood, 30 Scrap, 1 Cultist Gem."},
+        "teleporter": {"cost": {"wood": 15, "scrap": 25, "cultist_gem": 1}, "type": "structure", "note": "Verified: 15 Wood, 25 Scrap, 1 Cultist Gem."},
+        "bench_upgrade_5": {"cost": {"wood": 50, "scrap": 50, "forest_gem": 1}, "type": "bench_upgrade", "note": "Verified: 50 Wood, 50 Scrap, 1 Gem of the Forest."}
+      }
+    },
+    "5": {
+      "upgrade_cost": {"wood": 50, "scrap": 50, "forest_gem": 1},
+      "recipes": {
+        "respawn_capsule": {"cost": {"wood": 50, "scrap": 50, "forest_gem": 1}, "type": "structure", "note": "Verified: 50 Wood, 50 Scrap, 1 Gem of the Forest."},
+        "time_accelerator": {"cost": {"wood": 50, "scrap": 50, "forest_gem": 1}, "type": "structure", "note": "Verified: 50 Wood, 50 Scrap, 1 Gem of the Forest."},
+        "weather_machine": {"cost": {"wood": 50, "scrap": 50, "forest_gem": 1}, "type": "structure", "note": "Verified: 50 Wood, 50 Scrap, 1 Gem of the Forest."}
+      }
+    }
+  },
+  "structure_items": {
+    "map": {"name": "Map", "description": "Reveals the full world map."},
+    "compass": {"name": "Compass", "description": "Shows your heading and points towards undiscovered children."},
+    "old_bed": {"name": "Old Bed", "description": "A rough bed. Sleep to skip one day.", "skip_days": 1},
+    "regular_bed": {"name": "Regular Bed", "description": "Skip one day.", "skip_days": 1},
+    "good_bed": {"name": "Good Bed", "description": "Skip one day.", "skip_days": 1},
+    "giant_bed": {"name": "Giant Bed", "description": "Skip two days at once.", "skip_days": 2},
+    "sun_dial": {"name": "Sun Dial", "description": "Shows the time remaining until day or night."},
+    "bunny_trap": {"name": "Bunny Trap", "description": "Catches bunnies that wander near it."},
+    "bear_trap": {"name": "Bear Trap", "description": "Immobilises enemies. Usable ten times.", "uses": 10},
+    "freezer": {"name": "Freezer", "description": "A cold cabinet that keeps food from spoiling."},
+    "farm_plot": {"name": "Farm Plot", "description": "Grows up to 20 carrots or other crops.", "farm": true},
+    "wood_rain_storage": {"name": "Wood Rain Storage", "description": "A covered store that keeps wood dry during rain.", "storage": 20},
+    "shelf": {"name": "Shelf", "description": "Extra storage for your camp.", "storage": 15},
+    "log_wall": {"name": "Log Wall", "description": "A defensive wall for your camp.", "wall": true},
+    "crock_pot": {"name": "Crock Pot", "description": "Cooks hearty meals from raw ingredients.", "cook": true},
+    "radar": {"name": "Radar", "description": "Points towards nearby treasure chests."},
+    "boost_pad": {"name": "Boost Pad", "description": "Speeds you up as you run over it.", "speed": 20},
+    "biofuel_processor": {"name": "Biofuel Processor", "description": "Converts crops into biofuel automatically.", "processor": true},
+    "torch": {"name": "Torch", "description": "A standing torch that extends the campfire's safe zone.", "safe_radius": 6},
+    "lightning_rod": {"name": "Lightning Rod", "description": "Protects the camp from lightning strikes."},
+    "ammo_crate": {"name": "Ammo Crate", "description": "Stores ammunition and spare parts.", "storage": 25},
+    "oil_drill": {"name": "Oil Drill", "description": "Periodically produces oil barrels.", "producer": "oil_barrel"},
+    "teleporter": {"name": "Teleporter", "description": "Link two teleporters for instant travel."},
+    "respawn_capsule": {"name": "Respawn Capsule", "description": "Revives you once if you fall."},
+    "time_accelerator": {"name": "Time Accelerator", "description": "Skips an entire night once charged."},
+    "weather_machine": {"name": "Weather Machine", "description": "Stops rain and storms for three days."}
+  },
+  "cooking": {
+    "hearty_stew": {"cost": {"raw_meat": 1, "carrot": 2}, "station": "crock_pot"}
+  }
+}

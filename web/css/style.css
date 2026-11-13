@@ -1,0 +1,101 @@
+/* Ninety-Nine Nights in the Wildwood - UI theme */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+  background: #060a07; font-family: Georgia, "Times New Roman", serif; color: #e8f0e5;
+  user-select: none; -webkit-user-select: none; }
+#game-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+#ui-root { position: fixed; inset: 0; pointer-events: none; }
+#ui-root > * { pointer-events: auto; }
+
+.hidden { display: none !important; }
+
+/* Screens */
+.screen { position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.6rem; text-align: center;
+  background: radial-gradient(ellipse at center, rgba(6,12,8,0.55) 0%, rgba(4,8,5,0.92) 100%); }
+.screen.dim { background: rgba(4, 8, 5, 0.85); }
+.title { font-size: clamp(1.6rem, 5vw, 3rem); margin: 0; color: #d8e8cc;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8); letter-spacing: 0.04em; }
+.subtitle { max-width: 34rem; color: #9db894; font-style: italic; font-size: 0.95rem; margin: 0 1rem; }
+h2 { color: #d8e8cc; margin: 0; }
+button { font-family: inherit; font-size: 1rem; padding: 0.55rem 1.4rem; margin: 0.2rem;
+  background: rgba(20, 34, 22, 0.9); color: #e8f0e5; border: 1px solid #4a6b48;
+  border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+button:hover, button:active { background: #4a7a46; }
+button:disabled { opacity: 0.45; cursor: default; }
+.menu-buttons { display: flex; flex-direction: column; gap: 0.35rem; min-width: 15rem; }
+.row-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+.hint { color: #7d947a; font-size: 0.8rem; max-width: 36rem; padding: 0 1rem; }
+.info-line { min-height: 1.4em; color: #c9d8a8; font-size: 0.85rem; max-width: 40rem;
+  padding: 0 1rem; white-space: pre-wrap; }
+.scroll-list { max-height: 46vh; width: min(92vw, 34rem); overflow-y: auto; text-align: left; }
+.scroll-list button { display: block; width: 100%; text-align: left; margin: 0.15rem 0; }
+.settings-row { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+.preset-buttons button { margin: 0.15rem; }
+pre { text-align: left; line-height: 1.5; }
+
+/* Panels (inventory, crafting, map) */
+.panel { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  background: rgba(10, 16, 11, 0.95); border: 1px solid #3a5a3a; border-radius: 10px;
+  padding: 1rem 1.2rem; max-width: 94vw; max-height: 88vh; overflow-y: auto; text-align: center; }
+
+/* Inventory grid */
+#inv-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 0.5rem 0; }
+.inv-slot { aspect-ratio: 1; background: rgba(28, 42, 30, 0.9); border: 1px solid #3a5a3a;
+  border-radius: 6px; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; font-size: 0.55rem; padding: 2px; cursor: pointer; overflow: hidden; }
+.inv-slot .qty { font-weight: bold; }
+.inv-slot.selected { border-color: #8fd47f; box-shadow: 0 0 6px #8fd47f; }
+.inv-slot .icon { font-size: 1.1rem; line-height: 1; }
+
+.craft-tabs { display: flex; gap: 0.3rem; justify-content: center; margin: 0.4rem 0; }
+.tab { padding: 0.3rem 0.9rem; }
+.tab.active { background: #4a7a46; }
+
+/* HUD */
+#hud { position: absolute; inset: 0; pointer-events: none; font-size: 0.85rem; }
+.hud-left { position: absolute; left: 0.8rem; top: 0.8rem; }
+.hud-right { position: absolute; right: 0.8rem; top: 0.8rem; text-align: right; }
+.hud-strong { font-size: 1.05rem; color: #f0f5e8; text-shadow: 0 1px 3px #000; }
+#hud-left div, .hud-right div { text-shadow: 0 1px 3px #000; margin-bottom: 2px; }
+.bar { width: 9rem; height: 0.5rem; background: rgba(10,10,10,0.7); border: 1px solid #222;
+  border-radius: 3px; margin: 2px 0; }
+.bar.fire { margin-left: auto; }
+.bar-fill { height: 100%; border-radius: 2px; transition: width 0.2s; }
+.bar-fill.health { background: #d94040; }
+.bar-fill.hunger { background: #d9a030; }
+.bar-fill.stamina { background: #4e9be0; }
+.bar-fill.fire { background: #e08030; }
+#hud-warning { position: absolute; left: 50%; top: 22%; transform: translateX(-50%);
+  color: #ffb060; font-size: 1rem; text-shadow: 0 1px 4px #000; text-align: center;
+  max-width: 90%; white-space: pre-wrap; }
+#hud-prompt { position: absolute; left: 50%; bottom: 22%; transform: translateX(-50%);
+  color: #f0eec0; text-shadow: 0 1px 4px #000; }
+#hud-crosshair { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  color: rgba(255,255,255,0.65); font-size: 1rem; }
+
+/* Map canvas */
+#map-canvas { background: #0a120c; border: 1px solid #3a5a3a; border-radius: 6px;
+  width: min(70vw, 420px); height: auto; touch-action: none; }
+
+/* Touch controls */
+#touch-controls { position: absolute; inset: 0; pointer-events: none; }
+#joystick { position: absolute; left: 4vw; bottom: 5vh; width: 7.5rem; height: 7.5rem;
+  border-radius: 50%; background: rgba(20, 34, 22, 0.45); border: 2px solid rgba(120, 160, 120, 0.5);
+  pointer-events: auto; touch-action: none; }
+#joystick-knob { position: absolute; left: 50%; top: 50%; width: 3rem; height: 3rem;
+  border-radius: 50%; background: rgba(140, 190, 140, 0.7); transform: translate(-50%, -50%); }
+#touch-buttons { position: absolute; right: 3vw; bottom: 4vh; display: grid;
+  grid-template-columns: repeat(2, auto); gap: 0.5rem; pointer-events: auto; }
+.touch-btn { width: 4.2rem; height: 4.2rem; border-radius: 50%; padding: 0; font-size: 0.8rem;
+  background: rgba(20, 34, 22, 0.6); border: 1px solid rgba(120, 160, 120, 0.6); }
+.touch-btn.wide { width: 5rem; }
+.touch-btn.active { background: #4a7a46; }
+
+@media (max-width: 700px) {
+  .bar { width: 6.5rem; }
+  #hud { font-size: 0.75rem; }
+  .hud-strong { font-size: 0.9rem; }
+  #inv-grid { grid-template-columns: repeat(4, 1fr); }
+  #hud-prompt { bottom: 32%; font-size: 0.8rem; }
+}
