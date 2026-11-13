@@ -259,6 +259,24 @@ class ForestGame(ShowBase):
     # ----------------------------------------------------------- game setup
 
     def start_game(self, slot=None, class_id=None):
+        try:
+            self._start_game_impl(slot, class_id)
+        except Exception:
+            import traceback
+            tb = traceback.format_exc()
+            self._report_crash(tb)
+
+    def _report_crash(self, tb):
+        log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "error.log")
+        try:
+            with open(log_path, "w", encoding="utf-8") as f:
+                f.write(tb)
+        except OSError:
+            pass
+        print("\n=== The game crashed. The full error was saved to: ===\n%s\n=== Please share the contents of error.log. ===\n" % log_path)
+        print(tb)
+
+    def _start_game_impl(self, slot=None, class_id=None):
         if self._save_frame:
             self._save_frame.destroy()
             self._save_frame = None
@@ -606,5 +624,18 @@ class ForestGame(ShowBase):
 
 
 if __name__ == "__main__":
-    app = ForestGame()
-    app.run()
+    try:
+        app = ForestGame()
+        app.run()
+    except Exception:
+        import traceback
+        tb = traceback.format_exc()
+        log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "error.log")
+        try:
+            with open(log_path, "w", encoding="utf-8") as f:
+                f.write(tb)
+        except OSError:
+            pass
+        print("\n=== The game crashed. The full error was saved to: ===\n%s\n=== Please share the contents of error.log. ===\n" % log_path)
+        print(tb)
+        input("Press Enter to close...")
