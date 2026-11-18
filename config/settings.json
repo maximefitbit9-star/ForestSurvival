@@ -1,0 +1,98 @@
+{
+  "graphics_presets": {
+    "low": {
+      "resolution": [
+        1280,
+        720
+      ],
+      "fullscreen": false,
+      "vsync": true,
+      "render_distance": 120,
+      "shadows": false,
+      "shadow_resolution": 512,
+      "texture_quality": "low",
+      "ambient_effects": false,
+      "anisotropic": 1,
+      "multisamples": 0
+    },
+    "medium": {
+      "resolution": [
+        1600,
+        900
+      ],
+      "fullscreen": false,
+      "vsync": true,
+      "render_distance": 180,
+      "shadows": true,
+      "shadow_resolution": 1024,
+      "texture_quality": "medium",
+      "ambient_effects": true,
+      "anisotropic": 2,
+      "multisamples": 2
+    },
+    "high": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fullscreen": false,
+      "vsync": true,
+      "render_distance": 240,
+      "shadows": true,
+      "shadow_resolution": 2048,
+      "texture_quality": "high",
+      "ambient_effects": true,
+      "anisotropic": 4,
+      "multisamples": 4
+    },
+    "ultra": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "fullscreen": true,
+      "vsync": true,
+      "render_distance": 320,
+      "shadows": true,
+      "shadow_resolution": 2048,
+      "texture_quality": "high",
+      "ambient_effects": true,
+      "anisotropic": 8,
+      "multisamples": 8
+    }
+  },
+  "user_settings": {
+    "preset": "high",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fullscreen": false,
+    "vsync": true,
+    "render_distance": 240,
+    "shadows": true,
+    "shadow_resolution": 2048,
+    "texture_quality": "high",
+    "ambient_effects": true,
+    "sound_volume": 0.8,
+    "music_volume": 0.5
+  },
+  "world": {
+    "size": 512,
+    "height_scale": 24,
+    "seed": "",
+    "note": "World size in metres. A new game uses a random seed unless one is provided."
+  },
+  "player": {
+    "walk_speed": 6.0,
+    "sprint_speed": 10.5,
+    "crouch_speed": 3.0,
+    "jump_speed": 8.0,
+    "max_health": 100,
+    "max_hunger": 100,
+    "max_stamina": 100,
+    "hunger_rate": 0.35,
+    "stamina_drain": 12.0,
+    "stamina_regen": 8.0
+  }
+}

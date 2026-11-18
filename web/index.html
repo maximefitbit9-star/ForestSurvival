@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Ninety-Nine Nights in the Wildwood</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="game-canvas"></canvas>
+
+<!-- Full-screen UI layers -->
+<div id="ui-root">
+
+  <!-- Main menu -->
+  <div id="screen-menu" class="screen">
+    <h1 class="title">Ninety-Nine Nights<br>in the Wildwood</h1>
+    <p class="subtitle">An original forest survival game inspired by the systems of 99 Nights in the Forest</p>
+    <div class="menu-buttons">
+      <button data-action="continue">Continue</button>
+      <button data-action="new-game">New Game</button>
+      <button data-action="load">Load Game</button>
+      <button data-action="classes">Class Selection</button>
+      <button data-action="settings">Settings</button>
+      <button data-action="credits">Credits</button>
+      <button data-action="exit">Exit</button>
+    </div>
+    <p class="hint" id="menu-hint"></p>
+  </div>
+
+  <!-- Class selection -->
+  <div id="screen-classes" class="screen hidden">
+    <h2>Class Selection</h2>
+    <p id="class-diamonds"></p>
+    <div id="class-list" class="scroll-list"></div>
+    <div class="row-buttons">
+      <button data-action="classes-back">Back</button>
+      <button data-action="classes-confirm">Play with selected class</button>
+    </div>
+    <p id="class-info" class="info-line"></p>
+  </div>
+
+  <!-- Save selection -->
+  <div id="screen-saves" class="screen hidden">
+    <h2>Select Save Slot</h2>
+    <div id="save-list"></div>
+    <button data-action="saves-back">Back</button>
+  </div>
+
+  <!-- Settings -->
+  <div id="screen-settings" class="screen hidden">
+    <h2>Settings</h2>
+    <div class="settings-row">
+      <span>Graphics preset</span>
+      <div class="preset-buttons">
+        <button data-preset="low">Low</button>
+        <button data-preset="medium">Medium</button>
+        <button data-preset="high">High</button>
+        <button data-preset="ultra">Ultra</button>
+      </div>
+    </div>
+    <div class="settings-row"><label>Fullscreen <input type="checkbox" id="opt-fullscreen"></label></div>
+    <div class="settings-row"><label>Sound volume <input type="range" id="opt-sound" min="0" max="1" step="0.1"></label></div>
+    <div class="settings-row"><label>Music volume <input type="range" id="opt-music" min="0" max="1" step="0.1"></label></div>
+    <p id="settings-values" class="info-line"></p>
+    <button data-action="settings-back">Back</button>
+  </div>
+
+  <!-- Credits -->
+  <div id="screen-credits" class="screen hidden">
+    <h2>Credits</h2>
+    <p>Ninety-Nine Nights in the Wildwood - an original single-player survival game.</p>
+    <p>Inspired by the gameplay systems of 99 Nights in the Forest.</p>
+    <p>All models, textures and audio are procedurally generated originals.</p>
+    <p>Built with Three.js. Runs entirely offline in your browser.</p>
+    <button data-action="credits-back">Back</button>
+  </div>
+
+  <!-- Pause -->
+  <div id="screen-pause" class="screen hidden dim">
+    <h2>Paused</h2>
+    <div class="menu-buttons">
+      <button data-action="resume">Resume</button>
+      <button data-action="save">Save Game</button>
+      <button data-action="settings">Settings</button>
+      <button data-action="main-menu">Main Menu</button>
+    </div>
+  </div>
+
+  <!-- Result screen -->
+  <div id="screen-result" class="screen hidden dim">
+    <h2 id="result-title"></h2>
+    <pre id="result-stats"></pre>
+    <p id="result-diamonds"></p>
+    <div class="row-buttons">
+      <button data-action="result-menu">Main Menu</button>
+      <button data-action="result-new">New Run</button>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <div id="hud-day" class="hud-strong"></div>
+      <div id="hud-phase"></div>
+      <div id="hud-materials"></div>
+      <div class="bar"><div id="bar-health" class="bar-fill health"></div></div>
+      <div class="bar"><div id="bar-hunger" class="bar-fill hunger"></div></div>
+      <div class="bar"><div id="bar-stamina" class="bar-fill stamina"></div></div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-strong">Campfire</div>
+      <div class="bar fire"><div id="bar-fire" class="bar-fill fire"></div></div>
+      <div id="hud-fire-level"></div>
+    </div>
+    <div id="hud-warning"></div>
+    <div id="hud-prompt"></div>
+    <div id="hud-crosshair">+</div>
+  </div>
+
+  <!-- Inventory -->
+  <div id="screen-inventory" class="panel hidden">
+    <h2>Inventory</h2>
+    <div id="inv-grid"></div>
+    <p id="inv-detail" class="info-line"></p>
+    <p class="hint">Tap two slots to move - tap a selected slot to split - tap Use to eat or apply</p>
+    <button data-action="inv-close">Close (I)</button>
+  </div>
+
+  <!-- Crafting -->
+  <div id="screen-crafting" class="panel hidden">
+    <h2 id="craft-title"></h2>
+    <div class="craft-tabs">
+      <button data-tab="craft" class="tab active">Craft</button>
+      <button data-tab="grind" class="tab">Grinder</button>
+      <button data-tab="build" class="tab">Build</button>
+    </div>
+    <div id="craft-list" class="scroll-list"></div>
+    <p id="craft-info" class="info-line"></p>
+    <button data-action="craft-close">Close (C)</button>
+  </div>
+
+  <!-- Map -->
+  <div id="screen-map" class="panel hidden">
+    <h2>World Map</h2>
+    <canvas id="map-canvas" width="420" height="420"></canvas>
+    <button data-action="map-close">Close (M)</button>
+  </div>
+
+  <!-- Touch controls -->
+  <div id="touch-controls" class="hidden">
+    <div id="joystick"><div id="joystick-knob"></div></div>
+    <div id="touch-buttons">
+      <button id="btn-act" class="touch-btn wide">Act</button>
+      <button id="btn-chop" class="touch-btn wide">Chop</button>
+      <button id="btn-inv" class="touch-btn">Inv</button>
+      <button id="btn-craft" class="touch-btn">Craft</button>
+      <button id="btn-map" class="touch-btn">Map</button>
+      <button id="btn-sprint" class="touch-btn">Run</button>
+      <button id="btn-light" class="touch-btn">Light</button>
+      <button id="btn-pause" class="touch-btn">II</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/logic.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/render.js"></script>
+<script src="js/controls.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

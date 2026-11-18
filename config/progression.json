@@ -1,0 +1,85 @@
+{
+  "day_night": {
+    "day_length_seconds": 180,
+    "night_length_seconds": 90,
+    "note": "Verified against reference wiki: day 3 minutes, night 1 minute 30 seconds, cycle 4 minutes 30 seconds."
+  },
+  "campfire": {
+    "max_level": 6,
+    "levels": {
+      "1": {"name": "Basic Fire", "safe_radius": 12, "fuel_capacity": 100, "burn_rate_day": 0.8, "burn_rate_night": 1.6, "weather_resistance": 0.0, "unlock_radius": 60},
+      "2": {"name": "Log Benches", "safe_radius": 16, "fuel_capacity": 140, "burn_rate_day": 0.9, "burn_rate_night": 1.8, "weather_resistance": 0.1, "unlock_radius": 100},
+      "3": {"name": "Stone Ring", "safe_radius": 20, "fuel_capacity": 180, "burn_rate_day": 1.0, "burn_rate_night": 2.0, "weather_resistance": 0.25, "unlock_radius": 150},
+      "4": {"name": "Great Stone Ring", "safe_radius": 26, "fuel_capacity": 230, "burn_rate_day": 1.1, "burn_rate_night": 2.2, "weather_resistance": 0.4, "unlock_radius": 210},
+      "5": {"name": "Stone Hearth", "safe_radius": 32, "fuel_capacity": 300, "burn_rate_day": 1.2, "burn_rate_night": 2.4, "weather_resistance": 0.6, "unlock_radius": 280},
+      "6": {"name": "Eternal Flame", "safe_radius": 40, "fuel_capacity": 400, "burn_rate_day": 1.0, "burn_rate_night": 2.0, "weather_resistance": 0.85, "unlock_radius": 400}
+    },
+    "level_up_thresholds": [100, 220, 400, 650, 1000, 1500],
+    "note": "Level names/descriptions are original adaptations. Verified from wiki: 6 levels, safe zone and explorable map grow per level, higher levels resist rain and snow, final level depletes slower. Exact fuel amounts in the original vary by player count and are not published; thresholds below are configurable original values."
+  },
+  "fuel_values": {
+    "log": {"value": 2.0, "note": "Wiki: less than 1% per log at campfire level 4+."},
+    "coal": {"value": 8.0, "note": "Wiki: coal burns about 4x longer than wood; guaranteed coal pile near spawn."},
+    "fuel_canister": {"value": 20.0},
+    "biofuel": {"value": 14.0},
+    "oil_barrel": {"value": 35.0}
+  },
+  "tools": {
+    "old_axe": {"hits_normal_tree": 5, "hits_big_tree": 60, "damage": 4},
+    "good_axe": {"hits_normal_tree": 3, "hits_big_tree": 45, "damage": 8},
+    "strong_axe": {"hits_normal_tree": 1, "hits_big_tree": 35, "damage": 16},
+    "ice_axe": {"hits_normal_tree": 5, "hits_big_tree": 50, "damage": 16},
+    "chainsaw": {"hits_normal_tree": 2, "hits_big_tree": 38, "damage": 6}
+  },
+  "note_tools": "Axe hit counts verified against wiki Axes page (Strong Axe 1 hit normal / 35 big; Chainsaw 2 normal / 38 big; Ice Axe 5 normal). Old/Good axe values are original adaptations.",
+  "trees": {
+    "small": {"hits": 2, "logs": 1, "saplings": [0, 1], "min_tool": "old_axe"},
+    "normal": {"hits": 5, "logs": 3, "saplings": [0, 1], "min_tool": "old_axe"},
+    "big": {"hits": 35, "logs": 12, "saplings": [3, 4], "min_tool": "good_axe"},
+    "snow_pine": {"hits": 6, "logs": 4, "saplings": [0, 1], "min_tool": "old_axe"},
+    "ancient": {"hits": 50, "logs": 20, "saplings": [2, 4], "min_tool": "strong_axe"}
+  },
+  "note_trees": "Wiki: big trees give 12 logs and 3-4 saplings, normal trees 3 logs and 0-1 saplings. Hit scaling per tool from tools section.",
+  "diamonds": {
+    "per_night_survived": 1,
+    "per_child_rescued": 15,
+    "per_location_discovered": 2,
+    "victory_bonus": 100,
+    "campfire_level_bonus": 5,
+    "note": "Diamonds persist between runs. Original earns diamonds from badges and chests; this formula is a configurable original adaptation."
+  },
+  "children": {
+    "rescue_requirements": {
+      "dino_kid": {"campfire_level": 2, "guard": "wolves"},
+      "squid_kid": {"campfire_level": 3, "guard": "bears"},
+      "kraken_kid": {"campfire_level": 5, "guard": "bears"},
+      "koala_kid": {"campfire_level": 6, "guard": "bears"}
+    },
+    "note": "Verified: Dino Kid (first, wolves, red cave), Kraken Kid requires campfire level 5 and a yellow key, Koala Kid requires campfire level 6 and is guarded by six bears. Squid Kid rescued before Kraken Kid."
+  },
+  "grinder": {
+    "recipes": {
+      "log": {"output": "wood", "amount": 2},
+      "chair": {"output": "wood", "amount": 3},
+      "tire": {"output": "scrap", "amount": 2},
+      "bolt": {"output": "scrap", "amount": 1},
+      "sheet_metal": {"output": "scrap", "amount": 2},
+      "broken_machinery": {"output": "scrap", "amount": 4},
+      "radio": {"output": "scrap", "amount": 3},
+      "carrot": {"output": "biofuel", "amount": 2},
+      "corn": {"output": "biofuel", "amount": 2},
+      "pumpkin": {"output": "biofuel", "amount": 3}
+    },
+    "note": "Verified from wiki: grinder sits by the campfire and converts items (e.g. bolts into scrap, chairs/tires into wood/scrap, crops into biofuel). Exact quantities are configurable original values."
+  },
+  "farming": {
+    "crops": {
+      "carrot": {"grow_days": 2, "yield": [3, 6], "seed_drop_chance": 0.5},
+      "corn": {"grow_days": 3, "yield": [2, 5], "seed_drop_chance": 0.5},
+      "pumpkin": {"grow_days": 4, "yield": [1, 3], "seed_drop_chance": 0.4},
+      "chili": {"grow_days": 3, "yield": [2, 4], "seed_drop_chance": 0.4}
+    },
+    "rain_growth_bonus": 0.5,
+    "note": "Verified: farm plots grow up to 20 carrots; crops can be ground into biofuel. Growth days are original configurable values."
+  }
+}
