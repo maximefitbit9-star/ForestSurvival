@@ -92,3 +92,11 @@
   biome vertex colours and crown material tints - no image files, still fully
   offline, with graceful fallback to flat colours if canvas is unavailable.
 - 38 web tests still pass unchanged against the new renderer.
+
+## Stage 12 - Single-file standalone build
+
+- Added tools/build_standalone.py: inlines style.css, the vendored Three.js and
+  every game script into web/standalone.html (~740 KB) so the game runs from a
+  single file opened from anywhere - no folder structure, server or network
+  needed. Verified self-contained and offline by an added integration test
+  (39 web tests total, all passing).

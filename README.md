@@ -6,9 +6,12 @@ An original single-player forest survival game inspired by the gameplay systems 
 
 ## Quick start
 
-Option A - just open it:
+Option A - just open it (most reliable):
 1. Download or clone this repository.
-2. Double-click **`web/index.html`**.
+2. Double-click **`web/standalone.html`** - the entire game (code, styles, Three.js, data) in one self-contained file. It works wherever you copy or open it, no folder structure required.
+
+Option A2 - the modular version:
+2b. Double-click **`web/index.html`** (keep it inside the `web/` folder with its `css/`, `js/` and `vendor/` siblings).
 
 Option B - serve it (best for mobile testing):
 ```

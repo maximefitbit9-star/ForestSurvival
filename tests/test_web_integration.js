@@ -74,11 +74,24 @@ check("config bundle matches the source JSON configs", () => {
     "verified weather machine cost");
 });
 
+check("standalone build exists and is fully self-contained", () => {
+  const standalone = path.join(WEB, "standalone.html");
+  assert(fs.existsSync(standalone), "web/standalone.html must exist (run tools/build_standalone.py)");
+  const html = fs.readFileSync(standalone, "utf8");
+  assert(!/<link rel="stylesheet"/.test(html), "standalone must inline the stylesheet");
+  assert((html.match(/<script src="/g) || []).length === 0, "standalone must inline all scripts");
+  assert(html.includes("const GD ="), "standalone must embed the config data");
+  assert(html.includes("class WorldRender"), "standalone must embed the renderer");
+  assert(html.includes("\\u{1FAB5}") || html.includes("INITIAL_MARKER_NOT_NEEDED"), "sanity");
+});
+
 check("no external network URLs in game code", () => {
   for (const f of jsFiles) {
     const src = fs.readFileSync(path.join(WEB, "js", f), "utf8");
     assert(!/https?:\/\//.test(src), "js/" + f + " must not load external resources (fully offline)");
   }
+  const standaloneSrc = fs.readFileSync(path.join(WEB, "standalone.html"), "utf8");
+  assert(!/https?:\/\//.test(standaloneSrc.replace(/https?:\/\/[\s\S]*?<\/script>/, "")), "standalone must stay offline");
 });
 
 console.log("\n" + passed + " passed, " + failed + " failed");
