@@ -311,6 +311,21 @@ check("victory and diamonds persist after defeat", () => {
   assert(g2.profile.diamonds > 0, "diamonds persist after defeat");
 });
 
+check("terrain heights are stable and reproducible", () => {
+  // Regression: heights must be a pure function of position (the mutable-PRNG
+  // version made the ground shift under the player between frames).
+  const w = L.generateWorld(GD, "stable", 512, 24);
+  const h0 = w.height(37.5, -12.25);
+  for (let i = 0; i < 50; i++) {
+    assert(Math.abs(w.height(37.5, -12.25) - h0) < 1e-9, "same position, same height");
+  }
+  assert(w.height(1, 2) === w.height(1, 2), "idempotent");
+  const w2 = L.generateWorld(GD, "stable", 512, 24);
+  assert(w.height(35, -72) === w2.height(35, -72), "same seed same terrain");
+  const b0 = w.biomeAt(-90, 410);
+  for (let i = 0; i < 20; i++) assert(w.biomeAt(-90, 410) === b0, "biome stable");
+});
+
 // --------------------------------------------------------------------- main
 
 console.log("\n" + passed + " passed, " + failed + " failed");

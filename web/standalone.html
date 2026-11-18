@@ -330,11 +330,23 @@ const BIOMES = {
   magical: { ground: [0.25, 0.35, 0.30], trees: ["normal", "ancient"], density: 0.8 },
 };
 
-function valueNoise2d(rng, x, y) {
+// Pure coordinate hash: the same (x, y) always yields the same noise value, so
+// terrain height is stable between the baked mesh and runtime queries. (Using a
+// mutable PRNG here made the ground shift under the player - the 'stuck in the
+// floor' bug.)
+function hash2(seed, xi, yi) {
+  let h = (seed | 0) ^ Math.imul(xi | 0, 374761393) ^ Math.imul(yi | 0, 668265263);
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+}
+
+function valueNoise2d(seed, x, y) {
   const xi = Math.floor(x), yi = Math.floor(y);
   const xf = x - xi, yf = y - yi;
-  const s = (a, b) => rng.next();
-  const v00 = s(xi, yi), v10 = s(xi + 1, yi), v01 = s(xi, yi + 1), v11 = s(xi + 1, yi + 1);
+  const v00 = hash2(seed, xi, yi);
+  const v10 = hash2(seed, xi + 1, yi);
+  const v01 = hash2(seed, xi, yi + 1);
+  const v11 = hash2(seed, xi + 1, yi + 1);
   const interp = (a, b, t) => { t = t * t * (3 - 2 * t); return a + (b - a) * t; };
   return interp(interp(v00, v10, xf), interp(v01, v11, xf), yf);
 }
@@ -342,10 +354,12 @@ function valueNoise2d(rng, x, y) {
 function generateWorld(GD, seed, size, heightScale) {
   const rng = makeRng(String(seed));
   const world = { seed, size, heightScale, rng, locations: [], trees: [] };
+  world.noiseSeed = rng.int(0, 2147483647);
   world.height = (x, y) => {
-    let h = valueNoise2d(rng, x / 120, y / 120) * 1.0;
-    h += valueNoise2d(rng, x / 60, y / 60) * 0.4;
-    h += valueNoise2d(rng, x / 25, y / 25) * 0.12;
+    const s = world.noiseSeed;
+    let h = valueNoise2d(s, x / 120, y / 120) * 1.0;
+    h += valueNoise2d(s + 101, x / 60, y / 60) * 0.4;
+    h += valueNoise2d(s + 202, x / 25, y / 25) * 0.12;
     const d = Math.sqrt(x * x + y * y);
     h -= Math.max(0, (d - 200) / 400) * 0.3;
     return h * heightScale;
@@ -356,7 +370,7 @@ function generateWorld(GD, seed, size, heightScale) {
     return [Math.round(r * Math.cos(ang)), Math.round(r * Math.sin(ang))];
   };
   world.biomeAt = (x, y) => {
-    const n = valueNoise2d(rng, x / 180 + 500, y / 180 + 500);
+    const n = valueNoise2d(world.noiseSeed + 909, x / 180 + 500, y / 180 + 500);
     const d = Math.sqrt(x * x + y * y);
     if (d < 120) return "forest";
     if (n < 0.30) return "dense_woodland";
