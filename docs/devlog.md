@@ -82,3 +82,13 @@
   tests running the real app code against DOM/THREE stubs. The smoke test
   caught two real bugs (Campfire.fraction naming, inverted movement vector),
   both fixed. Total: 38 web tests + 19 Python tests, all passing.
+
+## Stage 11 - Web-only repository, procedural textures
+
+- Replaced the repository contents with the web edition only: the Python/
+  Panda3D edition was removed; the game is now the HTML/Three.js build in web/.
+- Ported the Python procedural textures to the browser: ground, bark and leaf
+  noise textures are painted onto canvases at runtime and multiplied with the
+  biome vertex colours and crown material tints - no image files, still fully
+  offline, with graceful fallback to flat colours if canvas is unavailable.
+- 38 web tests still pass unchanged against the new renderer.

@@ -23,12 +23,93 @@ const LOCATION_COLOURS = {
   red_cave: 0x59595f, blue_cave: 0x59595f, yellow_cave: 0x59595f, grey_cave: 0x59595f,
 };
 
+// Procedural textures, generated at runtime on a canvas - the browser version of
+// the Python game's noise textures (no image files, still fully offline).
+// Falls back to flat vertex colours if a 2d canvas is unavailable.
+const Textures = {
+  makeNoise(size, painter) {
+    if (!THREE.CanvasTexture) return null;
+    const canvas = document.createElement("canvas");
+    if (!canvas.getContext) return null;
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    painter(ctx, size);
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    return tex;
+  },
+
+  // Ground: neutral fine grain + soft blotches; biome vertex colours tint it.
+  makeGround() {
+    return this.makeNoise(128, (ctx, n) => {
+      ctx.fillStyle = "#b6b6b0";
+      ctx.fillRect(0, 0, n, n);
+      const img = ctx.getImageData(0, 0, n, n);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 200 + Math.random() * 55;
+        img.data[i] = v; img.data[i + 1] = v; img.data[i + 2] = v;
+      }
+      ctx.putImageData(img, 0, 0);
+      for (let i = 0; i < 14; i++) {
+        const r = 6 + Math.random() * 16;
+        const shade = Math.random() < 0.5 ? "rgba(40,44,32,0.25)" : "rgba(240,240,220,0.18)";
+        ctx.fillStyle = shade;
+        ctx.beginPath();
+        ctx.arc(Math.random() * n, Math.random() * n, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+  },
+
+  // Bark: warm brown with vertical streaks.
+  makeBark() {
+    return this.makeNoise(64, (ctx, n) => {
+      ctx.fillStyle = "#7c5a36";
+      ctx.fillRect(0, 0, n, n);
+      const img = ctx.getImageData(0, 0, n, n);
+      for (let y = 0; y < n; y++) {
+        for (let x = 0; x < n; x++) {
+          const i = (y * n + x) * 4;
+          const streak = Math.sin(x * 1.9 + Math.sin(y * 0.4) * 2) * 18;
+          const v = (110 + streak + Math.random() * 30);
+          img.data[i] = v; img.data[i + 1] = v * 0.72; img.data[i + 2] = v * 0.42;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+    });
+  },
+
+  // Leaves: green speckle that the crown material colour tints per tree type.
+  makeLeaves() {
+    return this.makeNoise(64, (ctx, n) => {
+      ctx.fillStyle = "#7ea06a";
+      ctx.fillRect(0, 0, n, n);
+      const img = ctx.getImageData(0, 0, n, n);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 150 + Math.random() * 90;
+        img.data[i] = v * 0.72; img.data[i + 1] = v; img.data[i + 2] = v * 0.6;
+      }
+      ctx.putImageData(img, 0, 0);
+      for (let i = 0; i < 20; i++) {
+        ctx.fillStyle = Math.random() < 0.5 ? "rgba(20,50,20,0.3)" : "rgba(200,235,170,0.22)";
+        ctx.beginPath();
+        ctx.arc(Math.random() * n, Math.random() * n, 2 + Math.random() * 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+  },
+};
+
 class WorldRender {
   constructor(game, settings, isMobile) {
     this.game = game;
     this.settings = settings;
     this.isMobile = !!isMobile;
     this.renderDistance = settings.render_distance || 240;
+    this.groundTex = Textures.makeGround();
+    this.barkTex = Textures.makeBark();
+    this.leafTex = Textures.makeLeaves();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x73b2f2);
     this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1200);
@@ -100,6 +181,10 @@ class WorldRender {
     geo.setAttribute("color", new THREE.BufferAttribute(colours, 3));
     geo.computeVertexNormals();
     const mat = new THREE.MeshLambertMaterial({ vertexColors: true });
+    if (this.groundTex) {
+      this.groundTex.repeat.set(48, 48);
+      mat.map = this.groundTex;
+    }
     this.terrain = new THREE.Mesh(geo, mat);
     this.terrain.receiveShadow = this.renderer.shadowMap.enabled;
     this.scene.add(this.terrain);
@@ -229,8 +314,22 @@ class WorldRender {
       const crownGeo = type === "snow_pine"
         ? new THREE.ConeGeometry(spec.radius * 2.2, spec.height * 0.35, 7)
         : new THREE.SphereGeometry(spec.radius * 2.2 * spec.crown, 8, 6);
-      const trunkMat = new THREE.MeshLambertMaterial({ color: 0x52391f });
+      const trunkMat = new THREE.MeshLambertMaterial({ color: 0x8c6a42 });
+      if (this.barkTex) {
+        const bark = this.barkTex;
+        bark.repeat.set(2, 2);
+        bark.needsUpdate = true;
+        trunkMat.color.setHex(0xffffff);
+        trunkMat.map = bark;
+        trunkMat.needsUpdate = true;
+      }
       const crownMat = new THREE.MeshLambertMaterial({ color: spec.colour });
+      if (this.leafTex) {
+        crownMat.map = this.leafTex;
+        // Brighten the tint so texture x colour multiplies to a lush green.
+        if (crownMat.color.lerp) crownMat.color.lerp(new THREE.Color(0xffffff), 0.45);
+        crownMat.needsUpdate = true;
+      }
       const trunkMesh = new THREE.InstancedMesh(trunkGeo, trunkMat, count);
       const crownMesh = new THREE.InstancedMesh(crownGeo, crownMat, count);
       trunkMesh.castShadow = crownMesh.castShadow = this.renderer.shadowMap.enabled;
